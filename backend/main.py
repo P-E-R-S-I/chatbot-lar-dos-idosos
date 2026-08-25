@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -145,6 +145,25 @@ async def chat(msg: Mensagem):
 @app.get("/")
 async def root():
     return {"status": "ok", "servico": "Chatbot Albergue São Vicente"}
+
+@app.get("/webhook-whatsapp-teste")
+async def verificar_webhook_whatsapp(
+    hub_mode: str = Query(None, alias="hub.mode"),
+    hub_verify_token: str = Query(None, alias="hub.verify_token"),
+    hub_challenge: str = Query(None, alias="hub.challenge")
+):
+    """
+    Endpoint de verificação exigido pela Meta para ativar o Webhook do WhatsApp.
+    O token configurado aqui deve ser o mesmo cadastrado no Painel do Desenvolvedor da Meta.
+    """
+    token_verificacao_esperado = os.getenv("WHATSAPP_VERIFY_TOKEN", "meu_token_secreto_do_albergue")
+    
+    if hub_mode == "subscribe" and hub_verify_token == token_verificacao_esperado:
+        from fastapi.responses import Response
+        return Response(content=hub_challenge, media_type="text/plain")
+    
+    from fastapi import HTTPException
+    raise HTTPException(status_code=403, detail="Token de verificação inválido")
 
 @app.post("/webhook-whatsapp-teste")
 async def webhook_whatsapp_teste(request: Request):
