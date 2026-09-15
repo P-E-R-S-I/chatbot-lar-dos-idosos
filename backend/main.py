@@ -138,6 +138,8 @@ def obter_resposta_groq(session_id, texto_usuario):
             messages=historicos[session_id],
             temperature=0.7,
             max_tokens=800
+
+            
         )
         
         texto_resposta = resposta.choices[0].message.content

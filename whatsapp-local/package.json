@@ -1,0 +1,16 @@
+{
+  "name": "albergue-whatsapp-local",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Conector de demonstracao via WhatsApp Web para o backend do Albergue",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node index.js",
+    "check": "node index.js --check",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "qrcode": "1.5.4",
+    "whatsapp-web.js": "1.34.7"
+  }
+}

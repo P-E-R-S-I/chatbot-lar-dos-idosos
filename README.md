@@ -1,5 +1,11 @@
 # Chatbot do Albergue: site e WhatsApp
 
+## Testar hoje pelo WhatsApp Web (QR code)
+
+Foi adicionado um conector local para demonstração, sem cadastro empresarial na Meta.
+Veja [como iniciar e conectar o celular](whatsapp-local/README.md).
+A integração oficial abaixo continua disponível para a implantação posterior.
+
 Os dois canais usam `obter_resposta_groq`: informa??es institucionais de
 `backend/documento.md`, estoque da view `view_estoque_atual` do Supabase e Groq.
 O site envia POST `/chat`. A Meta envia mensagens ao POST `/webhook-whatsapp`.

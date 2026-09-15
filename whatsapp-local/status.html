@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conectar WhatsApp — Albergue</title>
+<style>
+  body { font: 18px/1.6 system-ui, sans-serif; background: #eff6f3; color: #18382b; margin: 0; padding: 32px 20px; }
+  main { max-width: 650px; margin: auto; background: white; border-radius: 20px; padding: 30px; }
+  h1 { font-size: 28px; line-height: 1.2; }
+  #status { font-weight: 600; }
+  img { display: block; width: 320px; max-width: 100%; margin: 12px auto; }
+  img[hidden] { display: none; }
+  .note { font-size: 15px; color: #506158; }
+</style>
+<main>
+  <h1>Chatbot do Albergue no WhatsApp</h1>
+  <p id="status" role="status">Consultando conexão…</p>
+  <p id="last-event" class="note"></p>
+  <img id="qr" hidden alt="QR code para conectar o número de teste">
+  <ol>
+    <li>Cadastre o número de teste no WhatsApp do celular.</li>
+    <li>Abra <strong>Aparelhos conectados → Conectar um aparelho</strong> e escaneie o QR code.</li>
+    <li>Após aparecer “Conectado”, envie uma pergunta de <strong>outro WhatsApp</strong>.</li>
+  </ol>
+  <p>O bot responde automaticamente às novas mensagens individuais. Mantenha os dois terminais abertos durante a apresentação.</p>
+  <p class="note">Sessão de teste por integração não oficial. Para encerrar, use Ctrl+C no terminal do conector. Para revogar o acesso, desconecte o aparelho no celular.</p>
+</main>
+<script>
+  async function refresh() {
+    try {
+      const response = await fetch('/status', { cache: 'no-store' });
+      if (!response.ok) throw new Error('offline');
+      const data = await response.json();
+      document.querySelector('#status').textContent = data.status;
+      document.querySelector('#last-event').textContent = data.lastEvent || '';
+      const qr = document.querySelector('#qr');
+      qr.hidden = !data.qr;
+      if (data.qr) qr.src = data.qr;
+      else qr.removeAttribute('src');
+    } catch {
+      document.querySelector('#status').textContent = 'Conector desligado. Inicie novamente pelo terminal.';
+      document.querySelector('#qr').hidden = true;
+    }
+    setTimeout(refresh, 2000);
+  }
+  refresh();
+</script>
+</html>
