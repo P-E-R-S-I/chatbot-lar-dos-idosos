@@ -1,7 +1,4 @@
 .env
-__pycache__/
-*.pyc
 node_modules/
 .npm-cache/
-.wwebjs_auth/
-.wwebjs_cache/
+.netlify/

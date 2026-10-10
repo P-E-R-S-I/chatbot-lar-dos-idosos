@@ -226,7 +226,7 @@
 </div>
 
 <script>
-  const BACKEND_URL = "http://localhost:8000/chat";
+  const BACKEND_URL = "/chat";
 
   // Gera ou recupera session_id
   let sessionId = localStorage.getItem("session_id");
@@ -307,6 +307,7 @@
       });
 
       const data = await res.json();
+      if (!res.ok || typeof data.resposta !== "string") throw new Error("Backend indisponível");
       removeTyping();
       addMsg("bot", data.resposta);
     } catch (e) {

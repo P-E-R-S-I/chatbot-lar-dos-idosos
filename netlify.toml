@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  publish = "public"
+  functions = "backend/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["content/documento.md"]
+
+[dev]
+  port = 8888
+  publish = "public"
+
+# As rotas são declaradas no config das funções. Não usar redirect SPA /*
+# antes delas ao incorporar a integração no site das outras frentes.

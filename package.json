@@ -1,0 +1,13 @@
+{
+  "name": "frente4-chatbot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/check.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/integration/*.test.mjs",
+    "dev": "npx netlify-cli dev"
+  }
+}
