@@ -41,7 +41,6 @@ export function settings(env = process.env) {
     origins: [
       'https://alberguesaovicente.com.br',
       'https://www.alberguesaovicente.com.br',
-      'https://calm-fenglisu-d5aa32.netlify.app',
       ...(env.CORS_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean),
     ],
   };

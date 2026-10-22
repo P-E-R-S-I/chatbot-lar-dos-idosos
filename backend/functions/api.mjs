@@ -49,7 +49,11 @@ export function createApiHandler({ env = process.env, fetchImpl = fetch, logger 
             || typeof data.texto !== 'string' || !data.texto.trim() || data.texto.length > 4096) {
           throw new HttpError(422, 'Informe session_id e texto válidos');
         }
-        const session = `site:${data.session_id}`;
+        const session = `site:${data.session_id.trim()}`;
+        const clientIp = context?.ip || request.headers.get('x-nf-client-connection-ip') || data.session_id.trim();
+        if (state.allowRate && (!state.allowRate(`ip:${clientIp}`, 15, 60000) || !state.allowRate(session, 15, 60000))) {
+          throw new HttpError(429, 'Muitas mensagens enviadas. Aguarde um minuto e tente novamente.');
+        }
         const reply = await state.serial(session, async () => {
           const history = state.getHistory(session);
           const result = await answerImpl(cfg, data.texto.trim(), history, { fetchImpl, logger });
