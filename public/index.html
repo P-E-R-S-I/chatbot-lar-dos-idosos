@@ -644,7 +644,7 @@
   toggle.onclick = () => {
     window_.classList.toggle("aberto");
     if (window_.classList.contains("aberto") && messages.children.length === 0) {
-      addMsg("bot", "Olá! Sou o atendente virtual do Albergue São Vicente de Paula. 😊 Como posso ajudar?");
+      addMsg("bot", "Olá! Aqui é do atendimento do Albergue São Vicente de Paula. Como posso ajudar você hoje?");
     }
     if (window_.classList.contains("aberto")) {
       userInput.focus();
@@ -683,15 +683,6 @@
     const bub = document.createElement("div");
     bub.className = "bubble";
     formatText(bub, text);
-
-    if (role === "bot") {
-      const btn = document.createElement("button");
-      btn.className = "human-btn";
-      btn.textContent = "👤 Falar com pessoa real";
-      btn.onclick = () => addMsg("bot", "Entendido! Para falar diretamente com nossa equipe, entre em contato pelo telefone/WhatsApp (64) 3631-1437 ou presencialmente na Rua Miranda de Carvalho, 1929 – Jataí/GO. 🙏");
-      bub.appendChild(document.createElement("br"));
-      bub.appendChild(btn);
-    }
 
     div.appendChild(av);
     div.appendChild(bub);
